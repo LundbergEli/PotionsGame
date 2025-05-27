@@ -21,11 +21,12 @@ public:
 	}
 
 	void insertDefaultPotions(DynamicArray&);
-	void displayWholeBackpack(DynamicArray&);
+	void displayWholeBackpack(DynamicArray&) const;
 	void addPotion(Potions&, DynamicArray&);
 	void writePotionsToFile(const DynamicArray&, const std::string&);
-	void readFromFile(DynamicArray& Array);
-	void removePotion(DynamicArray&, Potions&);
+	void readFromFile(DynamicArray& Array) const;
+	void removePotion(DynamicArray&, const std::string&);
+	bool boolremovePotion(DynamicArray&, const std::string&);
 	void searchPotion(DynamicArray&, Potions&);
 
 };
