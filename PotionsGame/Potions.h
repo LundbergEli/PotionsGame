@@ -7,8 +7,8 @@
 static const int maxPotions = 5;
 
 struct moneyValues {
-static const int plat = 100;
-static const int gold = 50;
+static const int plat = 1000;
+static const int gold = 100;
 static const int silver = 10;
 static const int bronze = 1;
 };
@@ -22,8 +22,8 @@ std::string potency;
 int cost = 0;
 
 public:
-//boring constructor or somehting?
-Potions() {}
+//
+Potions() : name(""), desc(""), potency(""), cost(0) {}
 
 //overloaded constructor 
 Potions(std::string n, std::string d, std::string p, int c);

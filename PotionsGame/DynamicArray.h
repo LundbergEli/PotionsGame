@@ -10,9 +10,7 @@ private:
 	Potions* Array;
 public: 
 	//default ctor
-	DynamicArray() {
-		Array = new Potions[elements];
-	}
+	DynamicArray() : elements(0), Array(nullptr) {}
 
 	//copy ctor
 	//creates a deep copy of the object 
@@ -35,7 +33,7 @@ public:
 
 	// searches the array for a matching potion
 	// Returns the index of the first match if found or -1 if no match 
-	int find(const Potions& other);
+	int find(const Potions& other)const;
 	Potions find(int index) const;
 	int find(const std::string&)const;
 	

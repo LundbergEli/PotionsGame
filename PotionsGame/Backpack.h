@@ -25,7 +25,7 @@ public:
 	void addPotion(Potions&, DynamicArray&);
 	void writePotionsToFile(const DynamicArray&, const std::string&);
 	void readFromFile(DynamicArray& Array);
-	void removePotion(DynamicArray&, Potions&);
+	void removePotion(DynamicArray&, const std::string&);
 	void searchPotion(DynamicArray&, Potions&);
 
 };

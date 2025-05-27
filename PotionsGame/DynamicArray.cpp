@@ -54,13 +54,14 @@ DynamicArray& DynamicArray::operator=(DynamicArray&& other) noexcept{
 
 // searches the array for a matching potion
 // Returns the index of the first match if found or -1 if no match 
-int DynamicArray::find(const Potions& other) {
-	for (int i = 0; i < elements; i++) {
+int DynamicArray::find(const Potions& other) const {
+    for (int i = 0; i < elements; i++) {
+
 		if (Array[i] == other) {
-			return i;
-		}
-	}
-	return -1;
+            return i;
+        }
+    }
+    return -1;
 }
 
 Potions DynamicArray::find(int index) const{
@@ -173,7 +174,7 @@ void DynamicArray::Delete(const Potions& other) {
 
 void DynamicArray::Delete(int other) {
 	int index = other;
-	if (index >= elements) {
+	if (index < 0 || index >= elements) {
 		std::cout << "Potion not found ";
 		return;
 	}

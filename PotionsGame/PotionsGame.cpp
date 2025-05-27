@@ -2,7 +2,6 @@
 //
 
 #include <iostream>
-#include <algorithm>
 #include "Potions.h"
 #include "DynamicArray.h"
 #include "Backpack.h"
@@ -24,13 +23,21 @@ int main()
 
 
 	pack.readFromFile(PotionInventory);
-	/*PotionInventory.insert(SlowPotion);
-	pack.addPotion(HealingPotion, PotionInventory);
+	//pack.addPotion(SlowPotion, PotionInventory);
+	pack.removePotion(PotionInventory, "Slowing Potion");
+	//PotionInventory.insert(SlowPotion);
+	/*pack.addPotion(HealingPotion, PotionInventory);
 	pack.addPotion(FreezePotion, PotionInventory);
 	pack.addPotion(ShrinkPotion, PotionInventory);*/
-	purse.writeCoinsToFile(PotionInventory, "CoinPouch.bin");
 
-	pack.displayWholeBackpack(PotionInventory);
-	cout << '\n\n';
-	//PotionInventory.display();
+	//pack.displayWholeBackpack(PotionInventory);
+	//cout << '\n\n';
+	PotionInventory.display();
+
+	purse.readCoinsFromFile("CoinPouch.bin");
+	purse.spendCoins(280);
+	//purse.addCoins(4, 6, 19, 9);
+	purse.displayCoins();
+	cout << "\n" << purse.getTotalInBronze() << '\n';
+	purse.writeCoinsToFile(PotionInventory, "CoinPouch.bin");
 }

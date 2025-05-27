@@ -82,10 +82,11 @@ void Backpack::readFromFile(DynamicArray& Array) {
 
 
 
-void Backpack::removePotion(DynamicArray& Array, Potions& potionName) {
-	int index = Array.find(potionName);
-
-	Array.Delete(index);
+void Backpack::removePotion(DynamicArray& array, const std::string& potionName) {
+	int index = array.find(potionName);
+	if (index != -1) {
+		array.Delete(index);
+	}
 }
 
 void Backpack::addPotion(Potions& potion, DynamicArray& array) {
