@@ -15,7 +15,7 @@ private:
 	coinCount coins;
 	void convertBronze();
 public:
-	void writeCoinsToFile(const DynamicArray&, const std::string&);
+	void writeCoinsToFile(const std::string&);
 	void readCoinsFromFile(const std::string&) ;
 	void addCoins(int platinum, int gold, int silver, int bronze);
 	void displayCoins() const;

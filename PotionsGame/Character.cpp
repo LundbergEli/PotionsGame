@@ -1,38 +1,14 @@
 #include "Character.h"
 #include <fstream>
 
-void Character::save(const std::string& filename, DynamicArray& array)  {
-	if (filename == "Backpack.bin") {
-		pack.writePotionsToFile(array, filename);
-	}
-	else if(filename == "CoinPouch.bin"){
-		purse.writeCoinsToFile(array, filename);
-	}
-	else {
-		cout << "Unable to find that file\n";
-	}
-}
 
-void Character::load(const std::string& filename, DynamicArray& array) {
-	if (filename == "Backpack.bin") {
-		pack.readFromFile(array);
-	}
-	else if (filename == "CoinPouch.bin") {
-		purse.readCoinsFromFile(filename);
-	}
-	else {
-		cout << "Unable to read that file";
-	}
-}
 
-void Character::displayEverything() {
+void Character::displayEverything() const{
 	std::cout << "Character " << name << '\n';
 
-	purse.readCoinsFromFile("CoinPouch.bin");
-	cout << '\n'; 
 	purse.displayCoins();
-	cout << '\n';
-	pack.displayWholeBackpack(inventoryArray);
+	std::cout << '\n';
+	inventoryArray.display();
 }
 
 void Character::gainXP(int amt) {
@@ -89,7 +65,7 @@ void Character::heal(int amt) {
 	std::cout << "You have healed " << amt << " health. Your health is now " << health << ".\n";
 }
 
-void Character::usePotion(std::string& potionName) {
+void Character::usePotion(const std::string& potionName) {
 	// Check if the potion exists in the inventory
 	bool potionExists = pack.boolremovePotion(inventoryArray, potionName);
 
@@ -141,8 +117,8 @@ void Character::saveAll(const std::string& slotName) {
 	out.close();
 
 	//save to the existing files
-	save("Backpack.bin", inventoryArray);
-	save("CoinPouch.bin", inventoryArray);
+	saveBackpack();
+	saveCoinPouch();
 	std::cout << "Character saved to " << slotName << ".dat\n";
 }
 
@@ -168,7 +144,7 @@ void Character::loadAll(const std::string& slotName) {
 	in.close();
 
 	//load from the existing files
-	load("Backpack.bin", inventoryArray);
-	load("CoinPouch.bin", inventoryArray);
+	loadBackpack();
+	loadCoinPouch();
 	std::cout << "Character loaded from " << slotName << ".dat\n";
 }

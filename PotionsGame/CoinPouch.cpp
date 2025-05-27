@@ -27,7 +27,7 @@ void CoinPouch::addCoins(int platinum, int gold, int silver, int bronze) {
 }
 
 
-void CoinPouch::writeCoinsToFile(const DynamicArray&, const std::string& filename) {
+void CoinPouch::writeCoinsToFile(const std::string& filename) {
 	// Overwrite file each time (recommended for saving current state)
 	std::ofstream outFile(filename, std::ios::out | std::ios::binary);
 	// If you want to append instead, use:

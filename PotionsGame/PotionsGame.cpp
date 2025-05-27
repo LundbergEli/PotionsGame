@@ -6,6 +6,7 @@
 #include "DynamicArray.h"
 #include "Backpack.h"
 #include "Character.h"
+#include "CoinPouch.h"
 using namespace std;
 
 int main()
@@ -14,7 +15,7 @@ int main()
 	DynamicArray PotionInventory;
 	Backpack pack;
 	CoinPouch purse;
-	Character bobby("bobby", 1, 100);
+	Character bobby("Bobby", 1, 100, 0);
 
 	Potions SpeedPotion("Speed Potion", "Speeds you up to rabbit speed", "Extremely Potent", (moneyValues::gold * 2) + 109);
 	Potions ShrinkPotion("Shrink Potion", "Makes you shrink a lot", "Small af", (moneyValues::silver * 2) + 96);
@@ -23,6 +24,8 @@ int main()
 
 	
 	bobby.loadAll("Bobby");
+	bobby.removePotion("Freeze Potion");
+	bobby.displayEverything();
 
 
 
