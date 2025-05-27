@@ -1,11 +1,14 @@
 #include "CoinPouch.h"
 
 
-void CoinPouch::displayCoins() {
+void CoinPouch::displayCoins() const{
 	std::cout << "Platinum: " << coins.platinum << '\t' << "Gold: " << coins.gold << '\t' << "Silver: " << coins.silver << '\t' << "Bronze: " << coins.bronze << '\n';
 
 }
 
+
+void CoinPouch::displayCoins(DynamicArray& array) const {
+}
 
 void CoinPouch::addCoins(int platinum, int gold, int silver, int bronze) {
 	int totalBronze = platinum * moneyValues::plat + // add all values of coins up into bronze coins to then convert to more coins 
@@ -59,7 +62,7 @@ void CoinPouch::readCoinsFromFile(const std::string& filename) {
 	inFile.read(reinterpret_cast<char*>(&coins.bronze), sizeof(coins.bronze));
 
 	inFile.close();
-	std::cout << "Coin pouch loaded from file.\n";
+	//std::cout << "Coin pouch loaded from file.\n";
 }
 
 

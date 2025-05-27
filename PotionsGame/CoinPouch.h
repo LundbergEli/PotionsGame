@@ -16,9 +16,10 @@ private:
 	void convertBronze();
 public:
 	void writeCoinsToFile(const DynamicArray&, const std::string&);
-	void readCoinsFromFile(const std::string&);
+	void readCoinsFromFile(const std::string&) ;
 	void addCoins(int platinum, int gold, int silver, int bronze);
-	void displayCoins();
+	void displayCoins() const;
+	void displayCoins(DynamicArray&) const;
 	bool spendCoins(int);
 
 	//getters

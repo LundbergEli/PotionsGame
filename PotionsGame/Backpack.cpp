@@ -1,13 +1,13 @@
 #include "Backpack.h"
 
-void Backpack::displayWholeBackpack(DynamicArray& array) {
+void Backpack::displayWholeBackpack(DynamicArray& array) const{
 	readFromFile(array);
 	array.display();
 }
 
 
 void Backpack::writePotionsToFile(const DynamicArray& array, const std::string& filename = "Backpack.bin") {
-	std::ofstream outFile(filename, std::ios::out | std::ios::binary);
+	std::ofstream outFile(filename, std::ios::out | std::ios::binary );
 	if (!outFile) {
 		std::cout << "Error opening file for writing.\n";
 		return;
@@ -43,7 +43,7 @@ void Backpack::writePotionsToFile(const DynamicArray& array, const std::string& 
 }
 
 
-void Backpack::readFromFile(DynamicArray& Array) {
+void Backpack::readFromFile(DynamicArray& Array) const{
 	fstream BackPackFile("Backpack.bin", std::ios::in | std::ios::binary);
 
 	if (!BackPackFile) {
@@ -87,6 +87,20 @@ void Backpack::removePotion(DynamicArray& array, const std::string& potionName) 
 	if (index != -1) {
 		array.Delete(index);
 	}
+	else {
+		std::cout << "Potion not found in backpack.\n";
+	}
+}
+bool Backpack::boolremovePotion(DynamicArray& array, const std::string& potionName) {
+	int index = array.find(potionName);
+	if (index != -1) {
+		array.Delete(index);
+		return true; // Successfully removed
+	}
+	else {
+		std::cout << "Potion not found in backpack.\n";
+		return false; // Potion not found
+	}
 }
 
 void Backpack::addPotion(Potions& potion, DynamicArray& array) {
@@ -98,7 +112,6 @@ void Backpack::addPotion(Potions& potion, DynamicArray& array) {
 	else {
 		std::cout << "Potion already in backpack.\n";
 	}
-	writePotionsToFile(array, "Backpack.bin");
 }
 
 
