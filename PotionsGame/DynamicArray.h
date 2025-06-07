@@ -62,12 +62,19 @@ public:
 		return Array->getPotency();
 	}
 
+	Potions& operator[](int index) { //overloaded [] operator 
+		if (index < 0 || index >= elements) { throw std::out_of_range("Index out of range"); }
+		return Array[index];
+	}
 
+	const Potions& operator[](int index) const {// const overloaded [] operator 
+		if (index < 0 || index >= elements) { throw std::out_of_range("Index out of range"); }
+		return Array[index];
+	}
 
 	~DynamicArray() {// get rid of the dynamic memory so no mem leaks
 		delete[] Array;
 	}
-
 
 
 };

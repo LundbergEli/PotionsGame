@@ -21,6 +21,7 @@ private:
 	Backpack pack;
 	DynamicArray inventoryArray;
 public:
+
 	Character() {//default constructor
 		name = "Default";
 		level = 1;
@@ -56,13 +57,14 @@ public:
 	void heal(int);
 
 	void addCoins(int plat, int gold, int silver, int bronze) { purse.addCoins(plat, gold, silver, bronze); }//add coins into purse
+	void addCoins(int value){}
 	bool spendCoins(int amount) { return purse.spendCoins(amount); }//spend coins gets rid of amount of coins 
 	void displayCoins() { purse.displayCoins(); }//display all the coins in your purse or coinpouch
 
 	void addPotion(Potions& p) { pack.addPotion(p, inventoryArray); }//you can use the object name to add a potion if already constructed;
 	void removePotion(const std::string& potionName) { pack.removePotion(inventoryArray, potionName); pack.writePotionsToFile(inventoryArray, "Backpack.bin"); } // use string name of potion to delete
 	void usePotion(const std::string&);
-	void displayPurse()const;
+	void buyPotion(Potions&);
 
 	//potions
 	void saveBackpack() {pack.writePotionsToFile(inventoryArray, "Backpack.bin");}
@@ -73,8 +75,18 @@ public:
 	void loadCoinPouch() { purse.readCoinsFromFile("CoinPouch.bin"); }
 	
 	//save and load all
-	void saveAll(const std::string& slotName);
-	void loadAll(const std::string& slotName);
+	void saveAll(const std::string& filename);
+	void loadAll(const std::string& filename);
+
+	int find(const std::string& potionName) const {
+		for (int i = 0; i < inventoryArray.getElements(); ++i) {
+			if (inventoryArray[i].getName() == potionName) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	bool boolusePotion(const std::string& potionName);
 
 };
 

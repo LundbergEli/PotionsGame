@@ -4,11 +4,16 @@
 
 
 void Character::displayEverything() const{
-	std::cout << "Character " << name << '\n';
+	std::cout << "Character " << name
+		<< "\nLevel: " << level
+		<< "\nXp: " << xp
+		<< "\nhealth: " << health;
 
-	purse.displayCoins();
-	std::cout << '\n';
-	inventoryArray.display();
+	std::cout << "\nCoins: ";  
+	purse.displayCoins();//display your coinpouch
+	std::cout << purse.getTotalInBronze() << '\n';
+	std::cout << endl;
+	inventoryArray.display();//display your backpack
 }
 
 void Character::gainXP(int amt) {
@@ -70,39 +75,42 @@ void Character::usePotion(const std::string& potionName) {
 	bool potionExists = pack.boolremovePotion(inventoryArray, potionName);
 
 	//apply the potion effect here based on the name 
-	if(potionExists){
-		if (potionName == "Speed Potion") {
-			std::cout << "You used the Speed Potion. You feel quick.\n";
-			gainXP(25);
-			heal(5);
-		}
-		else if (potionName == "Shrink Potion") {
-			std::cout << "You used the Shrink Potion. You feel smaller.\n";
-			// Apply shrinking effect logic here
-		}
-		else if (potionName == "Freeze Potion") {
-			std::cout << "You used the Freeze Potion. Everything around you is freezing.\n";
-			// Apply freezing effect logic here
-		}
-		else if (potionName == "Healing Potion") {
-			std::cout << "You used the Healing Potion. You feel rejuvenated.\n";
-			heal(50); // Example healing amount
-		}
+	if (!potionExists) { std::cout << "You do not have " << potionName << " in your inventory. \n"; }
 		else {
-			std::cout << "Unknown potion effect.\n";
-		}
+			if (potionName == "Speed Potion") {
+				std::cout << "You used the Speed Potion. You feel quick.\n";
+				gainXP(25);
+				heal(5);
+			}
+			else if (potionName == "Shrink Potion") {
+				std::cout << "You used the Shrink Potion. You feel smaller.\n";
+			
+			}
+			else if (potionName == "Freeze Potion") {
+				std::cout << "You used the Freeze Potion. Everything around you is freezing.\n";
+			
+			}
+			else if (potionName == "Healing Potion") {
+				std::cout << "You used the Healing Potion. You feel rejuvenated.\n";
+				heal(maxHealth);
+				gainXP(30);
+			}
+			else {
+				std::cout << "Unknown potion effect.\n";
+				gainXP(45);
+				heal(30);
+			}
 	}
 }
 
 
 
-void Character::saveAll(const std::string& slotName) {
+void Character::saveAll(const std::string& filename) {
 	//save core attributes to a file
-	std::ofstream out(slotName + ".dat", std::ios::out | std::ios::binary);
+	std::ofstream out(filename + ".dat", std::ios::out | std::ios::binary);
 
-	if (!out.is_open()) {		// If the file cannot be opened, print an error message	
-		std::cout << "Error opening file for reading.\n";
-		return;
+	if (!out.is_open()) {		// If the file cannot be opened,throw an exception	
+		throw std::runtime_error("Failed to open “" + filename + "” for writing");
 	}
 
 	size_t nameLen = name.size();
@@ -119,17 +127,16 @@ void Character::saveAll(const std::string& slotName) {
 	//save to the existing files
 	saveBackpack();
 	saveCoinPouch();
-	std::cout << "Character saved to " << slotName << ".dat\n";
+	std::cout << "Character saved to " << filename << ".dat\n";
 }
 
 
-void Character::loadAll(const std::string& slotName) {
+void Character::loadAll(const std::string& filename) {
 	//load core attributes from a file
-	std::ifstream in(slotName + ".dat", std::ios::in | std::ios::binary);
+	std::ifstream in(filename + ".dat", std::ios::in | std::ios::binary);
 
 	if (!in.is_open()) { 		// If the file cannot be opened, print an error message
-		std::cout << "Error opening file for reading.\n";
-		return;
+		throw std::runtime_error("Failed to open “" + filename + "” for reading");
 	}
 
 	size_t nameLen;
@@ -146,5 +153,34 @@ void Character::loadAll(const std::string& slotName) {
 	//load from the existing files
 	loadBackpack();
 	loadCoinPouch();
-	std::cout << "Character loaded from " << slotName << ".dat\n";
+	std::cout << "Character loaded from " << filename << ".dat\n";
+}
+
+
+void Character::buyPotion(Potions& potion) {
+	int cost = potion.getCost();
+
+	//if the amount in your coinpouch is less than the cost of potion do not give them potion and exit method
+	if (purse.getTotalInBronze() < cost) { 
+		std::cout << "\nnot enough coins in your purse to buy " << potion.getName() << " \n"; return;
+	}
+
+	else {
+		spendCoins(cost); 
+		addPotion(potion);
+		std::cout << "You have bought a " << potion.getName();
+	}
+
+	
+}
+
+bool Character::boolusePotion(const std::string& potionName) {
+	int index = inventoryArray.find(potionName);
+	if (index != -1) {
+		removePotion(potionName);
+		// Apply potion effects here if needed
+		return true;
+	}
+	std::cout << "You don't have that potion!\n";
+	return false;
 }

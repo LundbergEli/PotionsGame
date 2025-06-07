@@ -66,7 +66,7 @@ int DynamicArray::find(const Potions& other) const {
 
 Potions DynamicArray::find(int index) const{
 	if (index < 0 || index >= elements) {
-		throw std::out_of_range("Index out of range");
+		throw std::out_of_range("Index out of range");//throw exception if index is out of range
 	}
 	return Array[index];
 }
@@ -127,8 +127,8 @@ void DynamicArray::insert(const std::string& n, const std::string& d, const std:
 
 void DynamicArray::display(int viewElement) const {
 	const Potions& potion = Array[viewElement];
-	if (viewElement >= elements) {
-		return;
+	if (viewElement > elements) {
+		throw std::length_error("viewElement out of range");// throw exception if viewElement is out of range
 	}
 	std::cout << "Potion Name: " << potion.getName() << "\n"
 		<< "Description: " << potion.getDesc() << "\n"
@@ -154,7 +154,7 @@ void DynamicArray::display() const {
 void DynamicArray::Delete(const Potions& other) {
 	int index = find(other);
 	if (index == -1) {
-		std::cout << "Potion not found ";
+		throw std::length_error("Potion not found in the array");// throw exception if potion is not found
 	}
 
 	int newElements = elements - 1;
@@ -175,8 +175,7 @@ void DynamicArray::Delete(const Potions& other) {
 void DynamicArray::Delete(int other) {
 	int index = other;
 	if (index < 0 || index >= elements) {
-		std::cout << "Potion not found ";
-		return;
+		throw std::length_error("Potion not found in array");//throw exception if potion is not found
 	}
 
 	int newElements = elements - 1;
