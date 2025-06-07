@@ -27,15 +27,14 @@ void CoinPouch::addCoins(int platinum, int gold, int silver, int bronze) {
 }
 
 
-void CoinPouch::writeCoinsToFile(const DynamicArray&, const std::string& filename) {
+void CoinPouch::writeCoinsToFile(const std::string& filename) {
 	// Overwrite file each time (recommended for saving current state)
 	std::ofstream outFile(filename, std::ios::out | std::ios::binary);
 	// If you want to append instead, use:
 	// std::ofstream outFile(filename, std::ios::out | std::ios::app | std::ios::binary);
 
 	if (!outFile) {
-		std::cout << "Error opening file for writing.\n";
-		return;
+		throw std::runtime_error("Failed to open “" + filename + "” for writing");
 	}
 
 	// Write the coin counts as binary data
@@ -52,8 +51,7 @@ void CoinPouch::writeCoinsToFile(const DynamicArray&, const std::string& filenam
 void CoinPouch::readCoinsFromFile(const std::string& filename) {
 	std::ifstream inFile(filename, std::ios::in | std::ios::binary);
 	if (!inFile) {
-		std::cout << "Error opening file for reading.\n";
-		return;
+		throw std::runtime_error("Failed to open “" + filename + "” for reading");
 	}
 
 	inFile.read(reinterpret_cast<char*>(&coins.platinum), sizeof(coins.platinum));

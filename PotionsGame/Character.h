@@ -5,8 +5,6 @@
 #include "Backpack.h"
 #include "CoinPouch.h"
 #include "DynamicArray.h"
-#include "Backpack.h"
-#include "CoinPouch.h"
 using namespace std;
 #pragma once
 
@@ -23,11 +21,22 @@ private:
 	Backpack pack;
 	DynamicArray inventoryArray;
 public:
-	Character() { pack.readFromFile(inventoryArray); }
-	Character(const std::string& n, double l, int h) {//name, level, health
+
+	Character() {//default constructor
+		name = "Default";
+		level = 1;
+		xp = 0;
+		health = 100;
+		loadBackpack();
+		loadCoinPouch();
+	}
+	Character(const std::string& n, double l, int h, int x) {//name, level, health, xp
 		name = n;
 		level = l;
 		health = h;
+		xp = x;
+		loadBackpack();
+		loadCoinPouch();
 	}
 
 	std::string getName() { return name; }
@@ -36,30 +45,48 @@ public:
 	double getLevel() { return level; }
 	void setLevel(const double l) { level = l; }//might not use
 
-	void displayEverything() ;//display array passed into method 
+	void displayEverything() const;//display array passed into method 
 
 	void gainXP(int xp);
 	int xpToNextLevel() const { return static_cast<int>(level * 100); }//calculate xp to next level based on level
 	void levelUp();
 
-	int getHealth(int) { return health; }
+	int getHealth() const{ return health; }
 	void setHealth(int h) { health = h; }// might not use
 	void takeDamage(int);
 	void heal(int);
 
 	void addCoins(int plat, int gold, int silver, int bronze) { purse.addCoins(plat, gold, silver, bronze); }//add coins into purse
+	void addCoins(int value){}
 	bool spendCoins(int amount) { return purse.spendCoins(amount); }//spend coins gets rid of amount of coins 
 	void displayCoins() { purse.displayCoins(); }//display all the coins in your purse or coinpouch
 
 	void addPotion(Potions& p) { pack.addPotion(p, inventoryArray); }//you can use the object name to add a potion if already constructed;
 	void removePotion(const std::string& potionName) { pack.removePotion(inventoryArray, potionName); pack.writePotionsToFile(inventoryArray, "Backpack.bin"); } // use string name of potion to delete
-	void usePotion(std::string&);
-	void displayPurse()const;
+	void usePotion(const std::string&);
+	void buyPotion(Potions&);
 
-	void save(const std::string&, DynamicArray&);
-	void load(const std::string&, DynamicArray&);
-	void saveAll(const std::string& slotName);
-	void loadAll(const std::string& slotName);
+	//potions
+	void saveBackpack() {pack.writePotionsToFile(inventoryArray, "Backpack.bin");}
+	void loadBackpack() {pack.readFromFile(inventoryArray);}
+
+	//coinpouch
+	void saveCoinPouch() { purse.writeCoinsToFile("CoinPouch.bin"); }
+	void loadCoinPouch() { purse.readCoinsFromFile("CoinPouch.bin"); }
+	
+	//save and load all
+	void saveAll(const std::string& filename);
+	void loadAll(const std::string& filename);
+
+	int find(const std::string& potionName) const {
+		for (int i = 0; i < inventoryArray.getElements(); ++i) {
+			if (inventoryArray[i].getName() == potionName) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	bool boolusePotion(const std::string& potionName);
 
 };
 

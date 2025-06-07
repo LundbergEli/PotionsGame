@@ -5,7 +5,9 @@
 #include "Potions.h"
 #include "DynamicArray.h"
 #include "Backpack.h"
+#include "Quest.h"
 #include "Character.h"
+#include "CoinPouch.h"
 using namespace std;
 
 int main()
@@ -14,15 +16,31 @@ int main()
 	DynamicArray PotionInventory;
 	Backpack pack;
 	CoinPouch purse;
-	Character bobby("bobby", 1, 100);
+	Character bobby("Bobby", 1, 100, 0);
+	Quest shrinkPotionQuest("Shrink Potion");
+	Quest speedPotionQuest("Speed Potion");
+	Quest freezePotionQuest("Freeze Potion");
+	Quest healingPotionQuest("Healing Potion");
+	Quest expensivePotionQuest("Expensive Potion");
 
-	Potions SpeedPotion("Speed Potion", "Speeds you up to rabbit speed", "Extremely Potent", (moneyValues::gold * 2) + 109);
+	Potions SpeedPotion("Speed Potion", "Speeds you up to rabbit speed", "Extremely Potent", (moneyValues::gold * 5) + 109);
 	Potions ShrinkPotion("Shrink Potion", "Makes you shrink a lot", "Small af", (moneyValues::silver * 2) + 96);
 	Potions FreezePotion("Freeze Potion", "Makes anything it touches freeze", "cold as hell boi", (moneyValues::gold * 2) + 6);
 	Potions HealingPotion("Healing Potion", "Heals you to full hp", "Extremely Potent", (moneyValues::plat * 2) + 89);
-
+	Potions ExpensivePotion("Expensive Potion", "Costs a lot of monet", "Costly", 4651);
 	
-	bobby.loadAll("Bobby");
+	bobby.loadAll("Bobby"); cout << '\n';
+	bobby.buyPotion(ShrinkPotion); cout << '\n';
+
+	bobby.saveAll("Bobby");
+
+
+	//bobby.loadAll("Bobby");
+	//bobby.usePotion("Speed Potion");
+	////bobby.takeDamage(20);
+	////bobby.heal(10);
+	//bobby.displayEverything();
+	//bobby.saveAll("Bobby");
 
 
 
