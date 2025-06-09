@@ -12,6 +12,8 @@ private:
     std::string requiredPotion;
     bool completed = false;
 public:
+    Quest() : requiredPotion(""), completed(false) {};
+
     Quest(const std::string& potion) : requiredPotion(potion) {}
 
     bool isCompleted() const { return completed; }
