@@ -86,7 +86,11 @@ public:
 		}
 		return -1;
 	}
+
+	//various random methods
 	bool boolusePotion(const std::string& potionName);
+	std::vector<std::string> getPotionNamesInInventory() const;
+
 
 };
 

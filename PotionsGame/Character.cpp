@@ -84,10 +84,13 @@ void Character::usePotion(const std::string& potionName) {
 			}
 			else if (potionName == "Shrink Potion") {
 				std::cout << "You used the Shrink Potion. You feel smaller.\n";
+				gainXP(15);
+				takeDamage(1);
 			
 			}
 			else if (potionName == "Freeze Potion") {
 				std::cout << "You used the Freeze Potion. Everything around you is freezing.\n";
+				gainXP(10);
 			
 			}
 			else if (potionName == "Healing Potion") {
@@ -95,6 +98,39 @@ void Character::usePotion(const std::string& potionName) {
 				heal(maxHealth);
 				gainXP(30);
 			}
+			else if (potionName == "Expensive Potion") {
+				std::cout << "You used the Expensive Potion. You feel rich.\n";
+				gainXP(100);
+				heal(50);
+			}
+			else if (potionName == "Unknown Potion") { // Example for an unknown potion
+				std::cout << "You used an unknown potion. You start slowly losing your mind.\n";
+				
+				for (int i = 0; i < 69; i++) {//lol
+					gainXP(i);
+					takeDamage(i);
+					heal(i);
+				}
+				std::cout << "(Haha it's supposed to do this)";
+			}
+			else if (potionName == "Mysterious Potion") {
+				std::cout << "You used the Mysterious Potion. You feel a strange sensation.\n";
+				gainXP(20);
+				heal(15);
+				takeDamage(10);
+				heal(15);
+				takeDamage(10);
+				heal(15);
+				takeDamage(10);
+			}
+			else if (potionName == "Random Potion") {
+				std::cout << "You used the Random Potion. You feel a mix of effects.\n";
+				gainXP(50);
+				heal(20);
+				takeDamage(10);
+				heal(20);
+			}
+
 			else {
 				std::cout << "Unknown potion effect.\n";
 				gainXP(45);
@@ -176,6 +212,8 @@ void Character::buyPotion(Potions& potion) {
 
 bool Character::boolusePotion(const std::string& potionName) {
 	int index = inventoryArray.find(potionName);
+
+	// Check if the potion exists in the inventory	
 	if (index != -1) {
 		removePotion(potionName);
 		// Apply potion effects here if needed
@@ -183,4 +221,12 @@ bool Character::boolusePotion(const std::string& potionName) {
 	}
 	std::cout << "You don't have that potion!\n";
 	return false;
+}
+
+std::vector<std::string> Character::getPotionNamesInInventory() const {
+	std::vector<std::string> names;
+	for (int i = 0; i < inventoryArray.getElements(); ++i) {
+		names.push_back(inventoryArray[i].getName());
+	}
+	return names;
 }
