@@ -48,6 +48,7 @@ int main()
         cout << "5. View Quests\n";
         cout << "6. Save Game\n";
         cout << "7. Exit\n";
+        cout << "8. Reset Character\n";
         cout << "Choose an option: ";
         int choice;
         cin >> choice;
@@ -273,6 +274,19 @@ int main()
             running = false;
             bobby.saveAll("Bobby");
             cout << "Game saved. Exiting.\n";
+            break;
+		case 8: // Reset Character
+            cout << "Are you sure you want to reset your character and all progress? (y/n): ";
+            char confirm;
+            cin >> confirm;
+            if (confirm == 'y' || confirm == 'Y') {
+                bobby.reset();
+                bobby.saveAll("Bobby"); // Save the reset state
+                cout << "Character and all stats have been reset.\n";
+            }
+            else {
+                cout << "Reset cancelled.\n";
+            }
             break;
         default:
             cout << "Invalid option.\n";

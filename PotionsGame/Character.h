@@ -91,6 +91,25 @@ public:
 	bool boolusePotion(const std::string& potionName);
 	std::vector<std::string> getPotionNamesInInventory() const;
 
+	//reset method 
+	void reset() {
+		name = "bobby";
+		level = 1;
+		xp = 0;
+		health = maxHealth;
+		purse = CoinPouch(); //reset coins
+		pack = Backpack(); //reset backpack
+		inventoryArray = DynamicArray(); // reset inventory
+		// Optionally, clear any save files:
+		std::ofstream ofs;
+		ofs.open("Backpack.bin", std::ofstream::out | std::ofstream::trunc);
+		ofs.close();
+		ofs.open("CoinPouch.bin", std::ofstream::out | std::ofstream::trunc);
+		ofs.close();
+		// If you have a character save file, clear it as well
+		ofs.open("Bobby", std::ofstream::out | std::ofstream::trunc);
+		ofs.close();
+	}
 
 };
 
